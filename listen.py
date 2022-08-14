@@ -13,7 +13,7 @@ voices=robot_mouth.getProperty('voices')
 robot_mouth.setProperty('voice',voices[1].id)
 robot_mouth.setProperty('rate', 140) # Decrease the Speed Rate x2
 
-def talk(text): #talk function
+def talk(text): #talk function (only accept string as parameter)
     robot_mouth.say(text)
     robot_mouth.runAndWait()
 
@@ -51,7 +51,6 @@ def run_alexa(): #this function pass all command to the coresponding methods
     print(ans)
     if ans[0:4]=='play':
         play(ans)
-
     if ans[0:9]=='calculate':
         ans= ans.split(" ")
         ans.pop(0)
@@ -100,14 +99,26 @@ def weather():
     res= requests.get(url)
     print(res.text)
        
-
-def calc(agrs): # calculate basic math   
-    if '+' in agrs[1]:
-        agrs=w_to_n(agrs[0]) + w_to_n(agrs[2])
-        agrs= str(agrs)
-        print("Answer: ",agrs)
-        talk("Answer is: "+ agrs)
-    
+def calc(agrs): # calculate basic math (only do simple math with 2 numbers)
+    # if '+' in agrs[1]:
+    #     agrs=w_to_n(agrs[0]) + w_to_n(agrs[2])
+    #     agrs= str(agrs)
+    #     print("Answer: ",agrs)
+    #     talk("Answer is: "+ agrs)
+    if '+' in agrs:
+        try: 
+            for i in agrs:
+                if i == '+':
+                    agrs.remove('+')
+            total=[int(item) for item in agrs] #convert string-value in list to int
+        except:
+            print("sorry, that exceed my ability")# this occur when multiples different operators in statement
+            talk("sorry, that exceed my ability")
+        total=sum(total)
+        total=str(total)
+        print("Answer: ",total)
+        talk("Answer is: "+ total)
+        
     if '-' in agrs[1]:
         agrs=w_to_n(agrs[0]) - w_to_n(agrs[2])
         agrs= str(agrs)
