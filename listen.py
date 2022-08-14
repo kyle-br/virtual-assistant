@@ -6,7 +6,7 @@ import requests #weather report for city
 import webbrowser
 import time
 import random
-from word2number import w2n
+from word2number import w2n # convert word to number (use to convert any number in word to real number: use in calc function)
 # Robot mouth part
 robot_mouth = pyttsx3.init()
 voices=robot_mouth.getProperty('voices')
@@ -32,9 +32,9 @@ def take_command():
             #      """)
             
             print('listening...')
-            robot_ear.adjust_for_ambient_noise(mic)
+            robot_ear.adjust_for_ambient_noise(mic) #remove noise in background, result in faster respond from machine
             audio= robot_ear.listen(mic)
-            command=robot_ear.recognize_google(audio)
+            command=robot_ear.recognize_google(audio) #using google word-listening service
             command= command.lower() 
             if'ivy' in command: 
                 command=command.replace('ivy ',"")
@@ -100,11 +100,6 @@ def weather():
     print(res.text)
        
 def calc(agrs): # calculate basic math (only do simple math with 2 numbers)
-    # if '+' in agrs[1]:
-    #     agrs=w_to_n(agrs[0]) + w_to_n(agrs[2])
-    #     agrs= str(agrs)
-    #     print("Answer: ",agrs)
-    #     talk("Answer is: "+ agrs)
     if '+' in agrs:
         try: 
             for i in agrs:
