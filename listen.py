@@ -99,7 +99,7 @@ def weather():
     url= 'https://wttr.in/{}'.format('baton rouge')
     res= requests.get(url)
     print(res.text)
-
+       
 
 def calc(agrs): # calculate basic math   
     if '+' in agrs[1]:
@@ -121,13 +121,15 @@ def calc(agrs): # calculate basic math
         talk("Answer is: "+ agrs)
    
     if '/' in agrs[1]:  
-        agrs=w_to_n(agrs[0]) / w_to_n(agrs[2])
-        agrs= str(agrs)
-        print("Answer: ",agrs)
-        talk("Answer is: "+ agrs)
-        
-        
-    
+        try:
+            agrs=w_to_n(agrs[0]) / w_to_n(agrs[2])
+            agrs= str(agrs)
+            print("Answer: ",agrs)
+            talk("Answer is: "+ agrs)
+        except ZeroDivisionError:
+            print("Zero, Division Error")
+            talk("Zero, Division Error")
+
 def w_to_n(x):
     x= w2n.word_to_num(x)
     return x
@@ -175,4 +177,3 @@ def jokes():
     joke=random.choice(jlist)
     print(joke)
     talk(joke)
-    
